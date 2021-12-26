@@ -9,6 +9,12 @@ const flash = require('express-flash');
 const Tought = require('./models/Toughts');
 const User = require('./models/User');
 
+//IMPORTANDO ROTAS
+const toughtsRoutes = require('./routes/toughtsRoutes');
+
+//IMPORTANDO CONTROLLERS
+const toughtsController = require('./controllers/toughtsController');
+
 //INICIALIZANDO EXPRESS
 const app = express();
 
@@ -18,9 +24,11 @@ app.use(express.static('public'));
 //IMPORTANDO O BANCO
 const connection = require('./db/conexao');
 
-//MIDDLEWARE
+//TEMPLATE ENGINE
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
+
+//MIDDLEWARE
 app.use(session({
     name: 'session',
     secret: 'nosso_secret',
@@ -58,6 +66,11 @@ app.use(express.urlencoded({
 
 app.use(express.json());
 
+//ROTAS
+app.use('/toughts' , toughtsRoutes);
+
+app.get('/', toughtsController.showToughts);
+
 //CONEXÃO
 connection.sync().then(() => {
     app.listen(3000)
@@ -66,4 +79,5 @@ connection.sync().then(() => {
 //Estrutura - OK;
 //Inicializando Estrutura - OK;
 //Finalizando Estrutura - OK;
-//Criando os Models - 
+//Criando os Models - OK;
+//Criando a Home Page - OK;

@@ -11,6 +11,7 @@ const User = require('./models/User');
 
 //IMPORTANDO ROTAS
 const toughtsRoutes = require('./routes/toughtsRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 //IMPORTANDO CONTROLLERS
 const toughtsController = require('./controllers/toughtsController');
@@ -68,6 +69,8 @@ app.use(express.json());
 
 //ROTAS
 app.use('/toughts' , toughtsRoutes);
+app.use('/', authRoutes);
+app.use('/', authRoutes);
 
 app.get('/', toughtsController.showToughts);
 
@@ -82,3 +85,4 @@ connection.sync().then(() => {
 //Criando os Models - OK;
 //Criando a Home Page - OK;
 //CSS da Home - OK;
+//Validação do Usuário - 

@@ -5,6 +5,10 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const flash = require('express-flash');
 
+//IMPORTANDO MODELS
+const Tought = require('./models/Toughts');
+const User = require('./models/User');
+
 //INICIALIZANDO EXPRESS
 const app = express();
 
@@ -59,24 +63,7 @@ connection.sync().then(() => {
     app.listen(3000)
 }).catch((err) => console.log(err))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //Estrutura - OK;
 //Inicializando Estrutura - OK;
-//Finalizando Estrutura - 
+//Finalizando Estrutura - OK;
+//Criando os Models - 

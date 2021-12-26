@@ -8,11 +8,51 @@ const flash = require('express-flash');
 //INICIALIZANDO EXPRESS
 const app = express();
 
+//PASTA ESTÁTICA
+app.use(express.static('public'));
+
 //IMPORTANDO O BANCO
 const connection = require('./db/conexao');
 
 //MIDDLEWARE
+app.engine('handlebars', exphbs.engine());
+app.set('view engine', 'handlebars');
+app.use(session({
+    name: 'session',
+    secret: 'nosso_secret',
+    resave: false,
+    saveUninitialized: false,
+    store: new FileStore({
+        logFn: function() {},
+        path: require('path').join(require('os').tmpdir(), 'sessions')
+    }),
+    cookie: {
+        secure: false,
+        maxAge: 360000,
+        expires: new Date(Date.now() + 360000),
+        httpOnly: true
+    }
+}))
 
+//FLASH MESSAGES
+app.use(flash());
+
+//SETAR A SESSION PARA RESPOSTA
+app.use((req, res, next) => {
+    if(req.session.userid){
+        res.locals.session = req.session
+    }
+
+    next();
+})
+
+//RECEBAR RESPOSTA DO BODY
+app.use(express.urlencoded({
+        extended: true
+    })
+)
+
+app.use(express.json());
 
 //CONEXÃO
 connection.sync().then(() => {
@@ -38,4 +78,5 @@ connection.sync().then(() => {
 
 
 //Estrutura - OK;
-//Inicializando Estrutura - 
+//Inicializando Estrutura - OK;
+//Finalizando Estrutura - 

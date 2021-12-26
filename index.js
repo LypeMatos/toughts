@@ -81,3 +81,4 @@ connection.sync().then(() => {
 //Finalizando Estrutura - OK;
 //Criando os Models - OK;
 //Criando a Home Page - OK;
+//CSS da Home - OK;

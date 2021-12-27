@@ -87,3 +87,4 @@ connection.sync().then(() => {
 //CSS da Home - OK;
 //Validação do Usuário - OK;
 //Fazendo Login - OK;
+//Dashboard - 

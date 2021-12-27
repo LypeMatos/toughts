@@ -85,4 +85,4 @@ connection.sync().then(() => {
 //Criando os Models - OK;
 //Criando a Home Page - OK;
 //CSS da Home - OK;
-//Validação do Usuário - 
+//Validação do Usuário - OK;

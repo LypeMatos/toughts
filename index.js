@@ -86,3 +86,4 @@ connection.sync().then(() => {
 //Criando a Home Page - OK;
 //CSS da Home - OK;
 //Validação do Usuário - OK;
+//Fazendo Login - OK;

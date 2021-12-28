@@ -16,12 +16,17 @@ module.exports = class ToughtsController {
             plain: true
         })
 
-        if(!user){
+        if (!user) {
             res.redirect('/login');
         }
 
         const toughts = user.Toughts.map((result) => result.dataValues);
-        res.render('toughts/dashboard', {toughts});
+        let emptyToughts = false;
+
+        if (toughts.length === 0) {
+            emptyToughts = true;
+        }
+        res.render('toughts/dashboard', { toughts, emptyToughts });
     }
 
     static async createToughtSave(req, res) {
@@ -44,5 +49,52 @@ module.exports = class ToughtsController {
 
     static createTought(req, res) {
         res.render('toughts/create');
+    }
+
+    static async removeTought(req, res) {
+        const id = req.body.id;
+        const UserId = req.session.userid;
+
+        try {
+            await Tought.destroy({
+                where: {
+                    id: id,
+                    UserId: UserId
+                }
+            })
+
+            req.flash('message', 'Pensamento removido com sucesso');
+            req.session.save(() => {
+                res.redirect('/toughts/dashboard')
+            })
+        } catch (error) {
+            console.log('Aconteceu um erro: ' + error);
+        }
+    }
+
+    static async updateTought(req, res) {
+        const id = req.params.id;
+
+        const tought = await Tought.findOne({ raw: true, where: { id: id } });
+
+        res.render('toughts/edit', { tought });
+    }
+
+    static async updateToughtSave(req, res) {
+        const id = req.body.id;
+
+        const tought = {
+            title: req.body.title
+        }
+
+        try {
+            await Tought.update(tought, {where: {id: id}});
+            req.flash('message', 'Pensamento atualizado com sucesso!');
+            req.session.save(() => {
+                res.redirect('/toughts/dashboard');
+            })
+        } catch (error) {
+            console.log('Aconteceu um erro: ' + error);
+        }
     }
 }

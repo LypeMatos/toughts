@@ -88,4 +88,4 @@ connection.sync().then(() => {
 //Validação do Usuário - OK;
 //Fazendo Login - OK;
 //Dashboard - OK;
-//Home Page Toughts - 
+//Home Page Toughts - OK;
